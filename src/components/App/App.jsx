@@ -6,16 +6,11 @@ import FilterSearch from '../FilterSearch';
 import { Container, ContactsSection } from './App.styled';
 
 export default function App() {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  );
 
-  useEffect(() => {
-    const contactsFromLc = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contactsFromLc);
-    if (contactsFromLc) {
-      setContacts(parsedContacts);
-    }
-  }, []);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
